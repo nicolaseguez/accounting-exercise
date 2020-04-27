@@ -17,6 +17,8 @@ $ cd project/folder/backend
 $ node test.js --transactions=1000
 ```
 
+Then open your browser of choice and enter `http://localhost:3000`. **Note**:  I didn't use any type of configuration or environment variables, so the port is harcoded.
+
 While the script is running hit the refresh endpoint on the frontend client to see new deposits. At the same time there is an error log endpoint that can be hit to check for `REJECTED` operations.
 
 ```
