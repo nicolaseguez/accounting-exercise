@@ -2,7 +2,17 @@
 
 ## Installing and Running
 
-This project uses **worker threads** and was created using **node v12.x** but also tested using **node 10.5.0**.
+There a `.nvmrc` file, so if you have **nvm** installed on your system, go to `project/folder/backend` and just run:
+
+> $ nvm use
+
+This will set node the the correct version. After that run:
+
+> $ npm install
+
+To install all the necessary dependencies.
+
+Note: This project uses **worker threads** and was created using **node v12.x** but also tested using **node 10.5.0**.
 
 ## Start
 
