@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
@@ -7,6 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import moment from 'moment';
 import Title from './Title';
 
 // Generate Order Data
@@ -54,8 +54,12 @@ export default function Deposits(props) {
         <TableBody>
           {deposits.reverse().slice(0, 50).map((row) => (
             <TableRow key={row.id}>
-              <TableCell className={row.type === "DEBIT" ? classes.red : classes.blue}>{row.date}</TableCell>
-              <TableCell className={row.type === "DEBIT" ? classes.red : classes.blue}>{row.type}</TableCell>
+              <TableCell className={row.type === "DEBIT" ? classes.red : classes.blue}>
+                {moment(row.date).format('MMMM Do YYYY, h:mm:ss a')}
+              </TableCell>
+              <TableCell className={row.type === "DEBIT" ? classes.red : classes.blue}>
+                {row.type}
+              </TableCell>
               <TableCell
                 align="right"
                 className={row.type === "DEBIT" ? classes.red : classes.blue}

@@ -1,5 +1,8 @@
 # Acconting Service
 
+## Installing and Running
+
+This project uses **worker threads** and was created using **node v12.x** but also tested using **node 10.5.0**.
 
 ## Start
 
@@ -30,6 +33,7 @@ http://localhost:3000/api/error-log
 
 Considering the scope of time, I wasn't able to do some things.
 
+* I used an older version of RxJS just as a convenience.
 * Frotend only shows the last 50 Deposits, neither pagination nor virtualized list was used.
 * No linter.
 * No unit tests.

@@ -8,11 +8,11 @@ const errors = [];
 let locked = false;
 
 function getMultiplier(transaction) {
-  return transaction.type === "CREDIT" ? 1 : -1;
+  return transaction.type.toUpperCase() === "CREDIT" ? 1 : -1;
 }
 
 function calculateTransaction({source$, amount}) {
-  const worker = new Worker('./worker.js');
+  const worker = new Worker(`${__dirname}/worker.js`);
   worker.postMessage([transactions, amount]);
 
   worker.on('message', (response) => {
@@ -22,7 +22,7 @@ function calculateTransaction({source$, amount}) {
       ...response
     };
     transactions.push(transaction);
-    source$.next(transaction);
+    source$.next({ status: 200, data: transaction });
   });
 
   worker.on('error', (err) => {
@@ -33,6 +33,8 @@ function calculateTransaction({source$, amount}) {
       date: new Date().toISOString()
     };
     errors.push(transaction);
+    source$.next({ status: 403, data: transaction });
+    locked = false;
   });
 
   worker.on('exit', () => {
@@ -42,7 +44,6 @@ function calculateTransaction({source$, amount}) {
 }
 
 function processTransaction(transaction) {
-  console.log("New Transaction!!", transaction.amount);
   const subject$ = new Rx.Subject();
   const source$ = subject$.catch(err => err);
   queue.push({
@@ -62,6 +63,7 @@ function readTransactions() {
 }
 
 function readErrors() {
+  console.log("ERRORS");
   const subject$ = new Rx.Subject();
   const source$ = subject$.catch(err => err);
   queue.unshift({ source$, amount: "ERRORS" });

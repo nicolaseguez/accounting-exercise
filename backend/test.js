@@ -20,5 +20,6 @@ for(let i = 0; i < transactions; i++) {
   }
   axios
     .post('http://localhost:3000/api', { amount, type })
+    .then(response => console.log(response.data))
 }
 console.log("finished");

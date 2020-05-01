@@ -12,14 +12,12 @@ parentPort.on('message', ([transactions, amount]) => {
   }
 
   const total = transactions.reduce((acc, tr) => tr.amount + acc, 0) + amount;
-  console.log("TOTAL", total);
+
   if (total < 0) {
-    throw Error("REJECTED")
+    throw Error("REJECTED");
   } else {
     parentPort.postMessage({ amount: amount, type: amount > 0 ? "CREDIT" : "DEBIT" });
     parentPort.close();
     return null;
   }
-
-  parentPort.close();
 });
