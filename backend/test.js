@@ -19,7 +19,10 @@ for(let i = 0; i < transactions; i++) {
     }
   }
   axios
-    .post('http://localhost:3000/api', { amount, type })
-    .then(response => console.log(response.data))
+    .post('http://localhost:3000/api/transactions', { amount, type })
+    .then(response => console.log("SUCCESS", response.data.type, response.data.amount))
+    .catch(err => {
+      console.log(err.toString());
+    })
 }
 console.log("finished");
