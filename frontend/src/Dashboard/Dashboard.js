@@ -12,18 +12,15 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
-import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from './listItems';
 import Deposits from './Deposits';
-import { fetchDeposits } from './';
+import { fetchDeposits, fetchBalance } from './';
 
 function Copyright() {
   return (
@@ -127,6 +124,7 @@ class DashboardBase extends React.Component {
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
 
   handleDrawerOpen() {
@@ -137,9 +135,13 @@ class DashboardBase extends React.Component {
     this.setState({ open: false });
   }
 
+  refresh() {
+    this.props.fetchBalance();
+    this.props.fetchDeposits();
+  }
+  
   render() {
-    const { classes, deposits, fetchDeposits } = this.props;
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const { classes, deposits, fetchDeposits, balance } = this.props;
 
     return (
       <div className={classes.root}>
@@ -181,7 +183,7 @@ class DashboardBase extends React.Component {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
-                  <Deposits deposits={deposits} refresh={() => fetchDeposits()} />
+                  <Deposits deposits={deposits} balance={balance} refresh={this.refresh} />
                 </Paper>
               </Grid>
             </Grid>
@@ -196,18 +198,20 @@ class DashboardBase extends React.Component {
 
   componentDidMount() {
     this.props.fetchDeposits();
+    this.props.fetchBalance();
   }
 }
 
 const mapState = (state) => {
-  console.log(state);
   return {
-    deposits: state.deposits.deposits
+    deposits: state.deposits.deposits,
+    balance: state.balance.balance
   }
 }
 
 const mapActions = {
-  fetchDeposits
+  fetchDeposits,
+  fetchBalance
 }
 
 const Dashboard = compose(

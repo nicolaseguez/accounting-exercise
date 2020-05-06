@@ -1,11 +1,9 @@
 import { put, takeEvery, all, call } from 'redux-saga/effects';
 import {
   FETCH_DEPOSITS,
-  FETCH_DEPOSIT,
-  FETCH_ERRORS,
+  FETCH_BALANCE,
   getDeposits,
-  getDeposit,
-  getErrors,
+  getBalance,
 } from './duck';
 import * as Api from './api';
 
@@ -20,32 +18,20 @@ export function* watchDeposits() {
   yield takeEvery(FETCH_DEPOSITS, fetchDeposits);
 }
 
-export function* fetchDeposit() {
+export function* fetchBalance() {
   try {
-    const response = yield call(Api.fetchDeposit)
-    yield put(getDeposit(response.data));
+    const response = yield call(Api.fetchBalance);
+    yield put(getBalance(response.data));
   } catch(e) {}
 }
 
-export function* watchDeposit() {
-  yield takeEvery(FETCH_DEPOSIT, fetchDeposit);
-}
-
-export function* fetchErrors() {
-  try {
-    const response = yield call(Api.fetchErrors)
-    yield put(getErrors(response.data));
-  } catch(e) {}
-}
-
-export function* watchErrors() {
-  yield takeEvery(FETCH_ERRORS, fetchErrors)
+export function* watchBalance() {
+  yield takeEvery(FETCH_BALANCE, fetchBalance)
 }
 
 export function* rootSaga() {
   yield all([
     watchDeposits(),
-    watchDeposit(),
-    watchErrors()
+    watchBalance()
   ])
 }

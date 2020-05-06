@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
-import { deposits, errors } from './Dashboard';
+import { deposits, balance } from './Dashboard';
 
 export const rootReducer = combineReducers({
-  deposits, errors
+  deposits,
+  balance
 });

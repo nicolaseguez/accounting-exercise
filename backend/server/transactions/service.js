@@ -76,7 +76,7 @@ function sendTransactions(source$, filter) {
 }
 
 function findTransactionById(source$, id) {
-  const transaction = transactions.find(tr => tr === id && tr.status === constants.OK);
+  const transaction = transactions.find(tr => tr.data.id === id && tr.status === constants.OK);
   const response = transaction != null ? 
     { status: 200, data: transaction } : 
     { status: 404, data: "Not Found" };

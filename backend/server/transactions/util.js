@@ -17,7 +17,7 @@ function calculateTotal(transactions, transaction) {
     const subtotal = transactions
         .filter(({ status }) => status === constants.OK)
         .reduce((acc, { data }) => getValue(data) + acc, 0);
-    console.log("Transaction", transactions.length, subtotal, amount);
+
     return subtotal + amount;
 }
 
